@@ -18,17 +18,17 @@ const jtrello = (function() {
 
   /* =================== Privata metoder nedan ================= */
   function captureDOMEls() {
-    DOM.$board = $('.board');
-    DOM.$listDialog = $('#list-creation-dialog');
-    DOM.$columns = $('.column');
-    DOM.$lists = $('.list');
-    DOM.$cards = $('.card');
+    //DOM.$board = $('.board');
+    //DOM.$listDialog = $('#list-creation-dialog');
+    //DOM.$columns = $('.column');
+    DOM.$list = $('.list');
+    //DOM.$cards = $('.card');
     
-    DOM.$newListButton = $('button#new-list');
-    DOM.$deleteListButton = $('.list-header > button.delete');
+    //DOM.$newListButton = $('button#new-list');
+    //DOM.$deleteListButton = $('.list-header > button.delete');
 
-    DOM.$newCardForm = $('form.new-card');
-    DOM.$deleteCardButton = $('.card > button.delete');
+    //DOM.$newCardForm = $('form.new-card');
+    //DOM.$deleteCardButton = $('.list-cards');
   }
 
   function createTabs() {}
@@ -39,31 +39,42 @@ const jtrello = (function() {
   *  createList, deleteList, createCard och deleteCard etc.
   */
   function bindEvents() {
-    DOM.$newListButton.on('click', createList);
+/*    DOM.$newListButton.on('click', createList);
     DOM.$deleteListButton.on('click', deleteList);
 
     DOM.$newCardForm.on('submit', createCard);
-    DOM.$deleteCardButton.on('click', deleteCard);
+    DOM.$deleteCardButton.on('click', 'button', deleteCard);*/
+    DOM.$list.on('click', function(event) {
+      let target = event.target;
+      if(target.tagName === "BUTTON") {
+        if($(target).parent().prop("tagName") === "LI") {
+          deleteCard(target);
+        } else {
+          deleteList(target);
+        }
+      } else if (target.tagName === "LI") {
+        //opens card dialog
+        console.log("open dialog");
+      }
+    });
   }
 
   /* ============== Metoder för att hantera listor nedan ============== */
   function createList() {
-    event.preventDefault();
-    console.log("This should create a new list");
+
   }
 
-  function deleteList() {
-    console.log("This should delete the list you clicked on");
+  function deleteList(target) {
+    $(target).closest('.list').remove();
   }
 
   /* =========== Metoder för att hantera kort i listor nedan =========== */
   function createCard(event) {
-    event.preventDefault();
-    console.log("This should create a new card");
+
   }
 
-  function deleteCard() {
-    console.log("This should delete the card you clicked on");
+  function deleteCard(target) {
+    $(target).parent().remove();
   }
 
   // Metod för att rita ut element i DOM:en
