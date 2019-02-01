@@ -1,192 +1,97 @@
-html,
 body {
-  background: #9999ff;
-  margin: 0;
-  padding: 30px 0 0;
-  font-family: sans-serif;
-  color: #4d4d4d;
-}
-
-a {
-  color: #838c91;
-}
-
-a:hover {
-  color: #111;
-}
-
-ul {
-    list-style: none;
     margin: 0;
-    padding: 0;
+    font-family: 'Roboto', sans-serif;
 }
 
-ul li {
-    margin: 0;
-    padding: 0;
-}
-
-input {
-  width: 100%;
-  border: none;
-  box-shadow: none;
-  border-radius: 3px;
-  height: auto;
-  margin-bottom: 4px;
-  max-height: 162px;
-  min-height: 54px;
-  overflow-y: auto;
-  padding: 0;
-  resize: none;
-  word-wrap: break-word;
-  text-indent: 8px;
+.container {
+    height: 100vh;
+    display: grid;
+    padding: 20px;
+    background-color: #9999ff;
 }
 
 .board {
-    height: 100vh;
+    display: flex;
+    overflow-x: auto;
 }
 
-.column {
-  width: 270px;
-  margin: 0 5px;
-  height: 100%;
-  box-sizing: border-box;
-  display: inline-block;
-  vertical-align: top;
-  white-space: nowrap;
+.board > * {
+    flex: 0 0 auto;
 }
 
 .list {
-  background: #e2e4e6;
-  border-radius: 3px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  max-height: 100%;
-  position: relative;
-  white-space: normal;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  user-select: none;
+    width: 300px;
+    height: calc(100% - 50px);
+    margin-left: 10px;
 }
 
-.list-header {
-  font-size: 14px;
-  min-height: 38px;
-  line-height: 38px;
-  font-weight: bold;
-  padding: 12px 10px;
-  margin: 0;
-  color: #4d4d4d;
+.list > * {
+    background-color: #e2e4e6;
+    color: #333;
 }
 
-.list-header .delete {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  padding: 8px;
+.list header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    font-weight: bold;
 }
 
-.list-cards {
-  flex: 1 1 auto;
-  margin-bottom: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  margin: 0 4px;
-  padding: 0 4px;
-  z-index: 1;
-  min-height: 0;
+.list ul {
+    list-style: none;
+    max-height: calc(100% - 100px);
+    padding: 0 10px;
+    margin: 0;
+    overflow-y: auto;
 }
 
-.list-cards .add-new {
-  margin: 10px 0;
+.list ul li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 3px;
+    background-color: #fff;
+    box-shadow: 0 1px 0 rgba(9,45,66,.25);
+    font-size: 13px;
 }
 
-.list-cards .add-new .button {
-  width: 100%;
+.list footer {
+    padding: 10px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
 }
 
-.card {
-  text-decoration: none;
-  display: flex;
-  background: #fff;
-  color: #444;
-  padding: 6px 6px 6px 8px;
-  font-size: 14px;
-  border-radius: 3px;
-  border-bottom: 1px solid #ccc;
-  margin-bottom: 5px;
-  transition: transform 0.25s ease;
-  transition: opacity 0.25s ease;
-  height: 16px;
-  position: relative;
-  z-index: 0;
+input {
+    width: 65%;
+    padding-left: 4px;
+    margin: 0 5px;
+    border: 0;
+    border-radius: 3px;
+    line-height: 1.8;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
 }
 
-.card .button {
-  position: absolute;
-  top: 6px;
-  right: 10px;
-  padding: 0;
+button.delete {
+    border: 0;
+    color: grey;
+    font-size: 14px;
 }
 
-.ui-dialog {
-  background: #e2e4e6;
-  border-radius: 3px;
-  padding: 10px;
-  z-index: 50;
+.list header button.delete {
+    background-color: #e2e4e6;
 }
 
-.ui-dialog .ui-dialog-titlebar {
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.ui-dialog .ui-dialog-titlebar-close {
-  display: none;
-}
-
-.ui-dialog input {
-  min-height: 24px;
-}
-
-.ui-dialog button {
-  margin-right: 8px;
-}
-
-.ui-button,
-.button {
-  display: inline-flex;
-  overflow: hidden;
-  padding: 8px 10px;
-  cursor: pointer;
-  user-select: none;
-  transition: all 150ms linear;
-  text-align: center;
-  white-space: nowrap;
-  text-decoration: none !important;
-  text-transform: none;
-  text-transform: capitalize;
-  border: 0 none;
-  border-radius: 4px;
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 1.3;
-  appearance: none;
-  justify-content: center;
-  align-items: center;
-  flex: 0 0 160px;
-}
-
-.ui-sortable-placeholder {
-  display: block;
-  background-color: rgba(0, 0, 0, 0.2);
-  border-color: transparent;
-  box-shadow: none;
-  border-radius: 3px;
-}
-
-.list.ui-sortable-helper {
-  cursor: grabbing;
-  box-shadow: -2px 2px 8px rgba(0, 0, 0, 0.3), 0px 0px 1px rgba(0, 0, 0, 0.5);
-  transform: rotate(4deg);
+button.add {
+    background-color: #5aac44;
+    box-shadow: 0 1px 0 0 #3f6f21;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 3px;
+    font-size: 12px;
+    padding: 6px;
 }
