@@ -22,6 +22,7 @@ const jtrello = (function() {
     //DOM.$listDialog = $('#list-creation-dialog');
     //DOM.$columns = $('.column');
     DOM.$list = $('.list');
+    DOM.$addCardForm = $('form.add-card');
     //DOM.$cards = $('.card');
     
     //DOM.$newListButton = $('button#new-list');
@@ -44,9 +45,10 @@ const jtrello = (function() {
 
     DOM.$newCardForm.on('submit', createCard);
     DOM.$deleteCardButton.on('click', 'button', deleteCard);*/
+    DOM.$addCardForm.on('submit', createCard);
     DOM.$list.on('click', function(event) {
       let target = event.target;
-      if(target.tagName === "BUTTON") {
+      if($(target).hasClass('delete')) {
         if($(target).parent().prop("tagName") === "LI") {
           deleteCard(target);
         } else {
@@ -61,7 +63,7 @@ const jtrello = (function() {
 
   /* ============== Metoder för att hantera listor nedan ============== */
   function createList() {
-
+    event.preventDefault();
   }
 
   function deleteList(target) {
@@ -70,7 +72,18 @@ const jtrello = (function() {
 
   /* =========== Metoder för att hantera kort i listor nedan =========== */
   function createCard(event) {
-
+    event.preventDefault();
+    let title = $(this).children('input').val();
+    if (title !== "") {
+      let card = `
+        <li>
+            ${title}
+            <button class="delete"></button>
+        </li>
+        `;
+      $(this).parent().siblings('ul').append(card);
+      $(this).children('input').val("");
+    }
   }
 
   function deleteCard(target) {
