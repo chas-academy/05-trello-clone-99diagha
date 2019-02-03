@@ -25,9 +25,9 @@ const jtrello = (function() {
     //DOM.$listDialog = $('#list-creation-dialog');
     DOM.$list = $('.list');
     DOM.$cards = $('.list ul');
+
+    //DOM.$addListForm = $('form.add-list');
     DOM.$addCardForm = $('form.add-card');
-    
-    //DOM.$newListButton = $('button#new-list');
   }
 
   function createTabs() {}
@@ -38,7 +38,7 @@ const jtrello = (function() {
   *  createList, deleteList, createCard och deleteCard etc.
   */
   function bindEvents() {
-    //DOM.$newListButton.on('click', createList);
+    //DOM.$addListForm.on('submit', createList);
     DOM.$addCardForm.on('submit', createCard);
     DOM.$list.on('click', function(event) {
       let target = event.target;
@@ -56,7 +56,8 @@ const jtrello = (function() {
     });
     DOM.$board.sortable({
       opacity: 0.5,
-      cursor: "grabbing"
+      cursor: "grabbing",
+      cancel: "form.add-list"
     });
     DOM.$cards.sortable({
       opacity: 0.5,
@@ -66,8 +67,29 @@ const jtrello = (function() {
   }
 
   /* ============== Metoder för att hantera listor nedan ============== */
-  function createList() {
-
+  function createList(event) {
+    event.preventDefault();
+    let list = `
+      <div class="list">
+        <header>
+            Test
+            <button class="delete"></button>
+        </header>
+        <ul>
+            <li>
+                Card #1
+                <button class="delete"></button>
+            </li>
+        </ul>
+        <footer>
+            <form class="add-card" action="index.html">
+                <input type="text" name="title" placeholder="Please name the card" />
+                <button class="add">Add Card</button>
+            </form>
+        </footer>
+      </div>
+      `;
+    $(list).insertBefore($(this));
   }
 
   function deleteList(target) {
@@ -80,7 +102,7 @@ const jtrello = (function() {
     let title = $(this).children('input').val();
     if (title !== "") {
       let card = `
-        <li class="drag">
+        <li>
             ${title}
             <button class="delete"></button>
         </li>
