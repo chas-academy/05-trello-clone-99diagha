@@ -27,8 +27,13 @@ const jtrello = (function() {
     DOM.$addListForm = $('form.add-list');
   }
 
-  function createTabs() {}
-  function createDialogs() {}
+  function createTabs() {
+
+  }
+
+  function createDialogs() {
+
+  }
 
   /*
   *  Denna metod kommer nyttja variabeln DOM för att binda eventlyssnare till
@@ -91,6 +96,12 @@ const jtrello = (function() {
       $(list).insertBefore($(this));
       $(this).children('input').val("");
       $(this).children('input').blur();
+
+      $('.list').children().sortable({
+        opacity: 0.5,
+        cursor: "grabbing",
+        connectWith: ".list ul"
+      });
     }
   }
 
