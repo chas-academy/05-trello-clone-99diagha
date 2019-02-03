@@ -66,6 +66,10 @@ body {
     border-bottom-right-radius: 3px;
 }
 
+form.add-list > * {
+    margin: 3px 10px;
+}
+
 input {
     width: 65%;
     padding-left: 4px;

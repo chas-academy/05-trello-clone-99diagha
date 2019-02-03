@@ -22,12 +22,9 @@ const jtrello = (function() {
   /* =================== Privata metoder nedan ================= */
   function captureDOMEls() {
     DOM.$board = $('.board');
-    //DOM.$listDialog = $('#list-creation-dialog');
-    DOM.$list = $('.list');
     DOM.$cards = $('.list ul');
 
-    //DOM.$addListForm = $('form.add-list');
-    DOM.$addCardForm = $('form.add-card');
+    DOM.$addListForm = $('form.add-list');
   }
 
   function createTabs() {}
@@ -38,9 +35,9 @@ const jtrello = (function() {
   *  createList, deleteList, createCard och deleteCard etc.
   */
   function bindEvents() {
-    //DOM.$addListForm.on('submit', createList);
-    DOM.$addCardForm.on('submit', createCard);
-    DOM.$list.on('click', function(event) {
+    DOM.$addListForm.on('submit', createList);
+    DOM.$board.on('submit', 'form.add-card', createCard);
+    DOM.$board.on('click', function(event) {
       let target = event.target;
       if($(target).hasClass('delete')) {
         if($(target).parent().prop("tagName") === "LI") {
@@ -55,9 +52,9 @@ const jtrello = (function() {
       }
     });
     DOM.$board.sortable({
+      items: ".list:not(form.add-list)",
       opacity: 0.5,
-      cursor: "grabbing",
-      cancel: "form.add-list"
+      cursor: "grabbing"
     });
     DOM.$cards.sortable({
       opacity: 0.5,
@@ -69,27 +66,32 @@ const jtrello = (function() {
   /* ============== Metoder för att hantera listor nedan ============== */
   function createList(event) {
     event.preventDefault();
-    let list = `
-      <div class="list">
-        <header>
-            Test
-            <button class="delete"></button>
-        </header>
-        <ul>
-            <li>
+    let title = $(this).children('input').val();
+    if (title !== "") {
+      let list = `
+        <div class="list">
+          <header>
+              ${title}
+              <button class="delete"></button>
+          </header>
+          <ul>
+             <li>
                 Card #1
                 <button class="delete"></button>
-            </li>
-        </ul>
-        <footer>
-            <form class="add-card" action="index.html">
-                <input type="text" name="title" placeholder="Please name the card" />
-                <button class="add">Add Card</button>
-            </form>
-        </footer>
-      </div>
-      `;
-    $(list).insertBefore($(this));
+             </li>
+          </ul>
+          <footer>
+              <form class="add-card" action="index.html">
+                  <input type="text" name="title" placeholder="Please name the card" />
+                  <button class="add">Add Card</button>
+              </form>
+          </footer>
+        </div>
+        `;
+      $(list).insertBefore($(this));
+      $(this).children('input').val("");
+      $(this).children('input').blur();
+    }
   }
 
   function deleteList(target) {
