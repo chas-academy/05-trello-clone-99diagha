@@ -1,5 +1,8 @@
 import $ from 'jquery';
 
+import 'webpack-jquery-ui';
+import 'webpack-jquery-ui/css';
+
 // require('webpack-jquery-ui');
 import '../css/styles.css';
 
@@ -18,18 +21,13 @@ const jtrello = (function() {
 
   /* =================== Privata metoder nedan ================= */
   function captureDOMEls() {
-    //DOM.$board = $('.board');
+    DOM.$board = $('.board');
     //DOM.$listDialog = $('#list-creation-dialog');
-    //DOM.$columns = $('.column');
     DOM.$list = $('.list');
+    DOM.$cards = $('.list ul');
     DOM.$addCardForm = $('form.add-card');
-    //DOM.$cards = $('.card');
     
     //DOM.$newListButton = $('button#new-list');
-    //DOM.$deleteListButton = $('.list-header > button.delete');
-
-    //DOM.$newCardForm = $('form.new-card');
-    //DOM.$deleteCardButton = $('.list-cards');
   }
 
   function createTabs() {}
@@ -40,11 +38,7 @@ const jtrello = (function() {
   *  createList, deleteList, createCard och deleteCard etc.
   */
   function bindEvents() {
-/*    DOM.$newListButton.on('click', createList);
-    DOM.$deleteListButton.on('click', deleteList);
-
-    DOM.$newCardForm.on('submit', createCard);
-    DOM.$deleteCardButton.on('click', 'button', deleteCard);*/
+    //DOM.$newListButton.on('click', createList);
     DOM.$addCardForm.on('submit', createCard);
     DOM.$list.on('click', function(event) {
       let target = event.target;
@@ -57,13 +51,23 @@ const jtrello = (function() {
       } else if (target.tagName === "LI") {
         //opens card dialog
         console.log("open dialog");
+        //$('#dialog').dialog();
       }
+    });
+    DOM.$board.sortable({
+      opacity: 0.5,
+      cursor: "grabbing"
+    });
+    DOM.$cards.sortable({
+      opacity: 0.5,
+      cursor: "grabbing",
+      connectWith: ".list ul"
     });
   }
 
   /* ============== Metoder för att hantera listor nedan ============== */
   function createList() {
-    event.preventDefault();
+
   }
 
   function deleteList(target) {
@@ -76,13 +80,14 @@ const jtrello = (function() {
     let title = $(this).children('input').val();
     if (title !== "") {
       let card = `
-        <li>
+        <li class="drag">
             ${title}
             <button class="delete"></button>
         </li>
         `;
       $(this).parent().siblings('ul').append(card);
       $(this).children('input').val("");
+      $(this).children('input').blur();
     }
   }
 

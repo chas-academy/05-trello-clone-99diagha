@@ -40,7 +40,9 @@ body {
 }
 
 .list ul {
+
     list-style: none;
+    min-height: 10px;
     max-height: calc(100% - 100px);
     padding: 0 10px;
     margin: 0;

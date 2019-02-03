@@ -15,6 +15,11 @@ module.exports = {
     filename: "bundle.js",
     chunkFilename: '[name].js'
   },
+  resolve: {
+    alias: {
+      'jquery': 'jquery/src/jquery'
+    }
+  },
   module: {
     rules: [
       {
@@ -38,14 +43,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'src/index.html'
     }),
-    new webpack.NamedModulesPlugin(),
+    /*new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.ProvidePlugin({
         $: "jquery",
         jQuery: "jquery",
         "window.jQuery": "jquery'",
         "window.$": "jquery"
-    }),
+    }),*/
     new MiniCssExtractPlugin({
       filename: devMode ? 'css/[name].css' : 'css/[name].[hash].css',
       chunkFilename: devMode ? 'css/[id].css' : 'css/[id].[hash].css'
