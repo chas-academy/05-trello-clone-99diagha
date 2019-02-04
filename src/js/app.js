@@ -30,7 +30,7 @@ const jtrello = (function() {
   function randomColorWidget() {
     $.widget( "custom.randomBgColor", {
       _create: function() {
-        let colors = ['red', 'yellow', 'green', 'blue'];
+        let colors = ['lightblue', 'yellow', 'green', 'lightyellow'];
         let randomColor = colors[Math.floor(Math.random() * colors.length)];
 
         this.element
@@ -64,8 +64,19 @@ const jtrello = (function() {
         }
       } else if (target.tagName === "LI") {
         //opens card dialog
-        console.log("open dialog");
-        //$('#dialog').dialog();
+        $('#tabs').tabs().randomBgColor().dialog({
+          modal: true,
+          resizable: false,
+          draggable: false,
+          show: 'explode',
+          width: 600,
+          height: 400,
+          title: $(target).text()
+        });
+        $('#datepicker').datepicker({
+          showOtherMonths: true,
+          selectOtherMonths: true
+        });
       }
     });
     DOM.$board.sortable({
@@ -105,7 +116,6 @@ const jtrello = (function() {
           </footer>
         </div>
         `;
-      DOM.$board.randomBgColor();
       $(list).insertBefore($(this));
       $(this).children('input').val("");
       $(this).children('input').blur();
