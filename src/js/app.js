@@ -27,6 +27,18 @@ const jtrello = (function() {
     DOM.$addListForm = $('form.add-list');
   }
 
+  function randomColorWidget() {
+    $.widget( "custom.randomBgColor", {
+      _create: function() {
+        let colors = ['red', 'yellow', 'green', 'blue'];
+        let randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+        this.element
+            .css('background-color', randomColor);
+      }
+    });
+  }
+
   function createTabs() {
 
   }
@@ -93,6 +105,7 @@ const jtrello = (function() {
           </footer>
         </div>
         `;
+      DOM.$board.randomBgColor();
       $(list).insertBefore($(this));
       $(this).children('input').val("");
       $(this).children('input').blur();
@@ -127,7 +140,9 @@ const jtrello = (function() {
   }
 
   function deleteCard(target) {
-    $(target).parent().remove();
+    $(target).parent().fadeOut(300, function(){
+      $(target).parent().remove();
+    });
   }
 
   // Metod för att rita ut element i DOM:en
@@ -144,6 +159,7 @@ const jtrello = (function() {
     captureDOMEls();
     createTabs();
     createDialogs();
+    randomColorWidget();
 
     bindEvents();
   }
